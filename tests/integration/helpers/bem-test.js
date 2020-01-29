@@ -68,6 +68,18 @@ test('test helper returns correct modifier classes with additional custom modifi
   assert.equal(this.$().text().trim(), 'component__element component__element--active component__element--primary component__element--foo');
 });
 
+test('test helper returns correct modifier classes with key-value custom modifiers', function(assert) {
+
+  this.set('b', 'component');
+  this.set('m', ['active', 'primary']);
+  this.set('boop', 'beep');
+  this.set('bar', true);
+
+  this.render(hbs `{{bem b 'element' m boop-=boop foo-=bar}}`);
+
+  assert.equal(this.$().text().trim(), 'component__element component__element--active component__element--primary component__element--boop-beep component__element--foo-true');
+});
+
 test('test dummy component', function(assert) {
   this.set('disabled', false);
 

@@ -3,6 +3,8 @@ import config from 'ember-get-config';
 import {
   get
 } from '@ember/object';
+import { dasherize } from '@ember/string';
+
 export function bem(params, additionalModifiers) {
 
   // return params;
@@ -25,7 +27,11 @@ export function bem(params, additionalModifiers) {
   if (additionalModifiers)
     for (var modifier in additionalModifiers) {
       if (additionalModifiers[modifier]) {
-        classNames.pushObject(`${baseClass}--${modifier}`);
+        if (modifier.match(/-$/)) {
+          classNames.pushObject(`${baseClass}--${modifier}${dasherize('' + additionalModifiers[modifier])}`);
+        } else {
+          classNames.pushObject(`${baseClass}--${modifier}`);
+        }
       }
     }
 
